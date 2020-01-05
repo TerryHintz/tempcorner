@@ -17,7 +17,9 @@ class App extends Component {
   render() {
     return(
         <div>
-          <SimpleTable/>
+          <SimpleTable
+            player_stats = {this.state.player_stats}
+          />
         </div>
     );
   }
