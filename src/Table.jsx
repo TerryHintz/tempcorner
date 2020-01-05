@@ -12,12 +12,54 @@ function createData(player, elo, wins, losses, draws, win_percentage, plus_minus
     return { player, elo, wins, losses, draws, win_percentage, plus_minus };
 }
 
-const rows = [
-    createData('Leo', 1037, 4, 2, 0, 66.67.toString() + '%', 2),
-    createData('Gaurav', 1037, 4, 2, 0, 66.67.toString() + '%', 2),
-];
+//connect to db
+const { Client } = require('pg')
+const client = new Client()
+client.connect()
 
 // load player data from database into array called rows
+const rows = [];
+
+let select_query = 'SELECT g.name game_name, p.name player_name, num_wins, num_losses, num_draws, elo '
+let join_query = 'FROM player_stat ps INNER JOIN game g ON ps.game_id=g.game_id INNER JOIN player p ON ps.player_id=p.player_id '
+let order_query = 'ORDER BY game_name DESC, elo DESC;'
+    
+client.query(select_query + join_query + order_query, (err, result) => {
+  if (err)
+      next(err)
+  else{
+    let games_stats = []
+    result.rows.forEach(row => {
+      let player_stat = {
+        player: row.player_name,
+        elo: Math.round(row.elo),
+        wins: row.num_wins,
+        losses: row.num_losses,
+        draws: row.num_draws,
+        win_percentage: getWinPercentage(row.num_wins, row.num_losses, row.num_draws),
+        plus_minus: row.num_wins - row.num_losses
+      }
+      
+      let game_stats = games_stats.find(gs => gs.game_name == row.game_name)
+      
+      if (!game_stats){
+        games_stats.push({
+          game_name: row.game_name,
+          stats: [player_stat]
+        })
+      } else{
+        game_stats.stats.push(player_stat)
+      }
+    })
+    console.log(games_stats)
+    rows = games_stats
+  }
+})  
+
+function getWinPercentage(wins, losses, draws){
+  let num_games = wins + losses + draws
+  return num_games ? (100*wins/num_games).toFixed(2)+'%' : "0%"
+}
 
 export default function SimpleTable() {
 
