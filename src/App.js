@@ -1,14 +1,22 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
-import SimpleTable from "./Table";
+import React, { Component } from 'react';
+import SimpleTable from "./table";
 
-function App() {
-  return (
-    <div>
-     <SimpleTable/>
-    </div>
-  );
+class App extends Component {
+  state = {
+
+  };
+
+  componentDidMount() {
+
+  }
+
+  render() {
+    return(
+        <div>
+          <SimpleTable/>
+        </div>
+    );
+  }
 }
 
 export default App;
