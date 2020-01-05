@@ -7,7 +7,7 @@ class App extends Component {
   };
 
   componentDidMount() {
-    fetch('https://boardgames.gaurmand.com/api/get/?type=player_stat')
+    fetch('https://boardgames.gaurmand.com/api/get?type=player_stat')
     .then(res => {
       console.log(res.json())
       this.setState({player_stats: res.json()})
