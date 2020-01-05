@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import SimpleTable from "./table";
+import SimpleTable from "./Table";
 
 class App extends Component {
   state = {
