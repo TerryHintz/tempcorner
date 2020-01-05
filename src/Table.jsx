@@ -26,7 +26,7 @@ let order_query = 'ORDER BY game_name DESC, elo DESC;'
     
 client.query(select_query + join_query + order_query, (err, result) => {
   if (err)
-      next(err)
+      console.error(err)
   else{
     let games_stats = []
     result.rows.forEach(row => {
