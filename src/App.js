@@ -3,14 +3,17 @@ import SimpleTable from "./Table";
 
 class App extends Component {
   state = {
-
+      player_stats: [],
   };
 
   componentDidMount() {
-    fetch('https://boardgames.gaurmand.com/api/get/?type=player_stat')
+    fetch('http://boardgames.gaurmand.com/api/get/?type=player_stat')
     .then(res => {
-      console.log(res.json())
-      this.setState({player_stats: res.json()})
+        res.json().then(res => {
+            console.log(res);
+            this.setState({player_stats: res[0].stats});
+            console.log(this.state.player_stats)
+        })
     })
     .catch(console.error)
   }
