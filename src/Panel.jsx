@@ -67,6 +67,7 @@ class Panel extends Component {
         return (
             <div className={'panel-root'}>
                 <ButtonGroup
+                    style={{padding: '50px'}}
                     orientation="vertical"
                     color="primary"
                     aria-label="vertical outlined primary button group"

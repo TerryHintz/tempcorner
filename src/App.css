@@ -1,7 +1,30 @@
+@import url('https://fonts.googleapis.com/css?family=Montserrat&display=swap');
+
 .root {
+    background-color: #f5f5f5;
+    min-height: 100vh;
+}
+
+.root-inner {
+    margin: auto;
     display: flex;
 }
 
 .panel-root {
+    width: 300px;
+}
 
+.table-root {
+    max-width: 800px;
+    width: 100%;
+}
+
+.game-title {
+    font-size: 25px;
+    font-weight: 600;
+    margin: 20px 0;
+}
+
+.montserrat {
+    font-family: 'Montserrat', sans-serif;
 }
