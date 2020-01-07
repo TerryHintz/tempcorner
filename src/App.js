@@ -1,5 +1,8 @@
 import React, { Component } from 'react';
 import SimpleTable from "./Table";
+import Panel from "./Panel";
+
+import './App.css';
 
 class App extends Component {
   state = {
@@ -12,9 +15,9 @@ class App extends Component {
 
   render() {
     return(
-        <div>
-          <SimpleTable
-          />
+        <div className={'root'}>
+            <Panel/>
+          <SimpleTable/>
         </div>
     );
   }
