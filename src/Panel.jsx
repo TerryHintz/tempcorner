@@ -9,6 +9,8 @@ class Panel extends Component {
 
     state = {
         game: false,
+        player: false,
+        match: false,
 
     };
 
@@ -21,23 +23,42 @@ class Panel extends Component {
     };
 
     handleAddPlayer = () => {
-
+        this.setState({player: true})
     };
 
     handleAddMatch = () => {
-
+        this.setState({match: true})
     };
 
     handleCloseGame = () => {
         this.setState({game: false})
     };
 
-    handleSubmit = () => {
+    handleClosePlayer = () => {
+        this.setState({player: false})
+    };
+
+    handleCloseMatch = () => {
+        this.setState({match: false})
+    };
+
+    handleSubmitGame = () => {
         let gameName = document.getElementById('gameName').value;
         console.log(gameName);
         let description = document.getElementById('description').value;
         console.log(description);
 
+        //do your backend stuff here
+    };
+
+    handleSubmitPlayer = () => {
+        let playerName = document.getElementById('playerName').value;
+        console.log(playerName);
+
+        //do your backend stuff here
+    };
+
+    handleSubmitMatch = () => {
         //do your backend stuff here
     };
 
@@ -50,9 +71,9 @@ class Panel extends Component {
                     color="primary"
                     aria-label="vertical outlined primary button group"
                 >
-                    <Button onClick={() => this.handleAddGame()}>Add Game</Button>
-                    <Button onClick={() => this.handleAddPlayer()}>Add Player</Button>
-                    <Button onClick={() => this.handleAddMatch()}>Add Match</Button>
+                    <Button onClick={this.handleAddGame}>Add Game</Button>
+                    <Button onClick={this.handleAddPlayer}>Add Player</Button>
+                    <Button onClick={this.handleAddMatch}>Add Match</Button>
                 </ButtonGroup>
                 <Dialog open={this.state.game} onClose={this.handleCloseGame}>
                     <DialogTitle>Add Game</DialogTitle>
@@ -62,7 +83,26 @@ class Panel extends Component {
                         <div>Description</div>
                         <TextField id="description" label="Outlined" variant="outlined" />
                         <div>
-                            <Button onClick={() => this.handleSubmit()}>Submit</Button>
+                            <Button onClick={() => this.handleSubmitGame()}>Submit</Button>
+                        </div>
+                    </div>
+                </Dialog>
+                <Dialog open={this.state.player} onClose={this.handleClosePlayer}>
+                    <DialogTitle>Add Player</DialogTitle>
+                    <div>
+                        <div>Player Name</div>
+                        <TextField id="playerName" label="Outlined" variant="outlined" />
+                        <div>
+                            <Button onClick={() => this.handleSubmitPlayer()}>Submit</Button>
+                        </div>
+                    </div>
+                </Dialog>
+                <Dialog open={this.state.match} onClose={this.handleCloseMatch}>
+                    <DialogTitle>Add Match</DialogTitle>
+                    <div>
+                        {/*this one i need to fetch player list from db so u will need to gimme func*/}
+                        <div>
+                            <Button onClick={() => this.handleSubmitMatch()}>Submit</Button>
                         </div>
                     </div>
                 </Dialog>
