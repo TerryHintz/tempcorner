@@ -12,44 +12,56 @@ import Paper from '@material-ui/core/Paper';
 class SimpleTable extends Component {
 
     state = {
-
+        player_stats: [],
     };
+
+    componentDidMount() {
+        fetch('http://boardgames.gaurmand.com/api/get/?type=player_stat')
+            .then(res => {
+                res.json().then(res => {
+                    console.log(res);
+                    this.setState({player_stats: res});
+                })
+            })
+            .catch(console.error)
+    }
 
     render() {
 
         return (
             <div>
-                <TableContainer style={{maxWidth: '800px'}} component={Paper}>
-                    <Table aria-label="simple table">
-                        <TableHead>
-                            <TableRow>
-                                <TableCell>Player</TableCell>
-                                <TableCell align="right">Elo</TableCell>
-                                <TableCell align="right">Wins</TableCell>
-                                <TableCell align="right">Losses</TableCell>
-                                <TableCell align="right">Draws</TableCell>
-                                <TableCell align="right">Win Percentage</TableCell>
-                                <TableCell align="right">+/-</TableCell>
-                            </TableRow>
-                        </TableHead>
-                        <TableBody>
-                            {this.props.player_stats.map(row => (
-                                // {[].map(row => (
-                                <TableRow key={row.player_name}>
-                                    <TableCell component="th" scope="row">
-                                        {row.player_name}
-                                    </TableCell>
-                                    <TableCell align="right">{row.elo}</TableCell>
-                                    <TableCell align="right">{row.num_wins}</TableCell>
-                                    <TableCell align="right">{row.num_losses}</TableCell>
-                                    <TableCell align="right">{row.num_draws}</TableCell>
-                                    <TableCell align="right">{row.win_percentage}</TableCell>
-                                    <TableCell align="right">{row.plusminus}</TableCell>
+                {this.state.player_stats.map(stats => (
+                    <TableContainer style={{maxWidth: '800px'}} component={Paper}>
+                        <Table aria-label="simple table">
+                            <TableHead>
+                                <TableRow>
+                                    <TableCell>Player</TableCell>
+                                    <TableCell align="right">Elo</TableCell>
+                                    <TableCell align="right">Wins</TableCell>
+                                    <TableCell align="right">Losses</TableCell>
+                                    <TableCell align="right">Draws</TableCell>
+                                    <TableCell align="right">Win Percentage</TableCell>
+                                    <TableCell align="right">+/-</TableCell>
                                 </TableRow>
-                            ))}
-                        </TableBody>
-                    </Table>
-                </TableContainer>
+                            </TableHead>
+                            <TableBody>
+                                {stats.stats.map(row => (
+                                    <TableRow key={stats.game_name + ' ' + row.player_name}>
+                                        <TableCell component="th" scope="row">
+                                            {row.player_name}
+                                        </TableCell>
+                                        <TableCell align="right">{row.elo}</TableCell>
+                                        <TableCell align="right">{row.num_wins}</TableCell>
+                                        <TableCell align="right">{row.num_losses}</TableCell>
+                                        <TableCell align="right">{row.num_draws}</TableCell>
+                                        <TableCell align="right">{row.win_percentage}</TableCell>
+                                        <TableCell align="right">{row.plusminus}</TableCell>
+                                    </TableRow>
+                                ))}
+                            </TableBody>
+                        </Table>
+                    </TableContainer>
+                ))}
             </div>
         );
     }
